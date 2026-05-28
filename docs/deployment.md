@@ -11,13 +11,217 @@ The project currently uses:
 - **Cache**: Redis (for caching)
 - **LLM**: Groq API for AI recommendations
 
-## Deployment Options
+## Recommended Deployment Strategy
 
-### Option 1: Deploy Current Stack (React + FastAPI)
+### Primary Deployment: Railway (Backend) + Vercel (Frontend)
 
-#### Frontend Deployment (React)
+This is the recommended deployment approach for the Oota Ready application:
 
-**Vercel** (Recommended for React)
+- **Backend**: Railway (FastAPI + PostgreSQL + Redis)
+- **Frontend**: Vercel (React + TypeScript)
+- **Advantages**: Easy setup, free tiers available, seamless integration, automatic SSL
+
+#### Backend Deployment on Railway
+
+**Step 1: Prepare Backend for Railway**
+
+1. Create a `railway.json` file in the backend directory:
+```json
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "uvicorn app.main:app --host 0.0.0.0 --port $PORT",
+    "healthcheckPath": "/health"
+  }
+}
+```
+
+2. Ensure `requirements.txt` includes all dependencies:
+```txt
+fastapi
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+redis
+python-dotenv
+pydantic
+pydantic-settings
+datasets
+pandas
+groq
+httpx
+```
+
+**Step 2: Deploy via Railway Dashboard**
+
+1. Go to https://railway.app and sign up/login
+2. Click "New Project" → "Deploy from GitHub repo"
+3. Select your repository
+4. Railway will automatically detect the Python project
+5. Configure the service:
+   - **Root Directory**: `backend`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+
+**Step 3: Add PostgreSQL Database**
+
+1. In your Railway project, click "New Service"
+2. Select "Database" → "PostgreSQL"
+3. Railway will provide a `DATABASE_URL` in the service variables
+4. Copy this URL for your backend configuration
+
+**Step 4: Add Redis Cache**
+
+1. In your Railway project, click "New Service"
+2. Select "Database" → "Redis"
+3. Railway will provide a `REDIS_URL` in the service variables
+4. Copy this URL for your backend configuration
+
+**Step 5: Configure Environment Variables**
+
+Add these environment variables in your Railway backend service:
+
+```bash
+# Database
+DATABASE_URL=${{Postgres.DATABASE_URL}}
+
+# Redis
+REDIS_URL=${{Redis.REDIS_URL}}
+REDIS_HOST=${{Redis.REDIS_HOST}}
+REDIS_PORT=${{Redis.REDIS_PORT}}
+
+# LLM API
+GROQ_API_KEY=your_groq_api_key_here
+LLM_PROVIDER=groq
+LLM_MODEL=llama3-70b-8192
+LLM_TEMPERATURE=0.7
+LLM_MAX_TOKENS=1000
+
+# API Configuration
+API_HOST=0.0.0.0
+API_PORT=${PORT}
+
+# CORS Configuration
+CORS_ORIGINS=https://your-frontend-domain.vercel.app,http://localhost:3000
+CORS_ALLOW_CREDENTIALS=true
+CORS_ALLOW_METHODS=*
+CORS_ALLOW_HEADERS=*
+
+# Environment
+ENVIRONMENT=production
+DEBUG=false
+
+# Cache
+CACHE_ENABLED=true
+CACHE_TTL=3600
+
+# Rate Limiting
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_REQUESTS=100
+RATE_LIMIT_PERIOD=60
+```
+
+**Step 6: Run Data Ingestion**
+
+After deployment, you need to populate the database with restaurant data:
+
+1. Go to your Railway backend service
+2. Click "Console" to open a terminal
+3. Run the ingestion script:
+```bash
+python scripts/ingest_data.py --no-cache
+```
+
+**Step 7: Get Backend URL**
+
+1. Go to your Railway backend service
+2. Copy the generated domain (e.g., `your-backend.railway.app`)
+3. This will be your `API_BASE_URL` for the frontend
+
+#### Frontend Deployment on Vercel
+
+**Step 1: Prepare Frontend for Vercel**
+
+1. Create a `vercel.json` file in the frontend directory:
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install"
+}
+```
+
+2. Update `frontend/.env.production`:
+```bash
+VITE_API_URL=https://your-backend.railway.app
+```
+
+**Step 2: Deploy via Vercel Dashboard**
+
+1. Go to https://vercel.com and sign up/login
+2. Click "Add New Project"
+3. Import your GitHub repository
+4. Configure the project:
+   - **Framework Preset**: Vite
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+
+**Step 3: Configure Environment Variables**
+
+Add this environment variable in Vercel:
+
+```bash
+VITE_API_URL=https://your-backend.railway.app
+```
+
+**Step 4: Deploy**
+
+1. Click "Deploy"
+2. Vercel will build and deploy your frontend
+3. Wait for the deployment to complete
+4. Copy the generated domain (e.g., `your-frontend.vercel.app`)
+
+**Step 5: Update CORS in Railway**
+
+Go back to your Railway backend service and update the CORS origins:
+
+```bash
+CORS_ORIGINS=https://your-frontend.vercel.app
+```
+
+#### Alternative: Deploy via CLI
+
+**Railway CLI**
+```bash
+# Install Railway CLI
+npm i -g @railway/cli
+
+# Login
+railway login
+
+# Initialize project
+cd backend
+railway init
+
+# Add PostgreSQL
+railway add postgresql
+
+# Add Redis
+railway add redis
+
+# Deploy
+railway up
+
+# Get service URLs
+railway domain
+```
+
+**Vercel CLI**
 ```bash
 # Install Vercel CLI
 npm i -g vercel
@@ -25,7 +229,45 @@ npm i -g vercel
 # Deploy from frontend directory
 cd frontend
 vercel
+
+# Production deployment
+vercel --prod
 ```
+
+### Alternative Deployment Options
+
+If you prefer different platforms, here are alternative options:
+
+#### Backend Alternatives
+
+**Render**
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Configure:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. Add environment variables from `.env.example`
+5. Add PostgreSQL and Redis from Render marketplace
+
+**Fly.io**
+```bash
+# Install Fly CLI
+curl -L https://fly.io/install.sh | sh
+
+# Login
+fly auth login
+
+# Launch app
+fly launch --dockerfile Dockerfile
+
+# Add PostgreSQL
+fly postgres create
+
+# Deploy
+fly deploy
+```
+
+#### Frontend Alternatives
 
 **Netlify**
 ```bash
@@ -38,38 +280,13 @@ npm run build
 netlify deploy --prod
 ```
 
-#### Backend Deployment (FastAPI)
-
-**Render** (Recommended for FastAPI)
-1. Create a new Web Service on Render
-2. Connect your GitHub repository
-3. Configure:
-   - Build Command: `pip install -r requirements.txt`
-   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Add environment variables from `.env.example`
-
-**Railway**
-```bash
-# Install Railway CLI
-npm i -g @railway/cli
-
-# Login and deploy
-railway login
-railway init
-railway up
-```
-
-#### Database Deployment
-
-**PostgreSQL**
-- **Supabase**: Free tier available, easy setup
-- **Neon**: Serverless PostgreSQL with free tier
-- **Render PostgreSQL**: Integrated with Render deployment
-
-**Redis**
-- **Redis Cloud**: Free tier available
-- **Upstash**: Serverless Redis with free tier
-- **Render Redis**: Integrated with Render deployment
+**AWS Amplify**
+1. Connect your GitHub repository
+2. Configure build settings:
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+3. Add environment variables
+4. Deploy
 
 ### Option 2: Streamlit Deployment (Alternative)
 
@@ -262,39 +479,124 @@ Keep the FastAPI backend and use Streamlit as the frontend:
 
 ## Environment Variables
 
-For all deployment options, ensure these environment variables are configured:
+### Railway Backend Environment Variables
+
+Configure these in your Railway backend service:
 
 ```bash
-# Backend
-DATABASE_URL=postgresql://user:password@host:port/database
-REDIS_URL=redis://host:port
-GROQ_API_KEY=your_groq_api_key
-API_HOST=0.0.0.0
-API_PORT=8000
+# Database (Railway provides this automatically)
+DATABASE_URL=${{Postgres.DATABASE_URL}}
 
-# Frontend
-REACT_APP_API_URL=https://your-backend-url.com
+# Redis (Railway provides this automatically)
+REDIS_URL=${{Redis.REDIS_URL}}
+REDIS_HOST=${{Redis.REDIS_HOST}}
+REDIS_PORT=${{Redis.REDIS_PORT}}
+
+# LLM API (Required - get from Groq)
+GROQ_API_KEY=your_groq_api_key_here
+LLM_PROVIDER=groq
+LLM_MODEL=llama3-70b-8192
+LLM_TEMPERATURE=0.7
+LLM_MAX_TOKENS=1000
+
+# API Configuration
+API_HOST=0.0.0.0
+API_PORT=${PORT}
+
+# CORS Configuration (Update with your Vercel domain)
+CORS_ORIGINS=https://your-frontend.vercel.app,http://localhost:3000
+CORS_ALLOW_CREDENTIALS=true
+CORS_ALLOW_METHODS=*
+CORS_ALLOW_HEADERS=*
+
+# Environment
+ENVIRONMENT=production
+DEBUG=false
+
+# Cache Configuration
+CACHE_ENABLED=true
+CACHE_TTL=3600
+
+# Rate Limiting
+RATE_LIMIT_ENABLED=true
+RATE_LIMIT_REQUESTS=100
+RATE_LIMIT_PERIOD=60
 ```
+
+### Vercel Frontend Environment Variables
+
+Configure these in your Vercel project settings:
+
+```bash
+# API URL (Update with your Railway backend domain)
+VITE_API_URL=https://your-backend.railway.app
+```
+
+### Getting Groq API Key
+
+1. Go to https://console.groq.com
+2. Sign up for a free account
+3. Navigate to API Keys
+4. Create a new API key
+5. Copy the key and add it to Railway environment variables
 
 ## Database Setup
 
-### PostgreSQL Setup
+### Railway PostgreSQL (Recommended)
 
-**Using Supabase:**
+When using Railway, PostgreSQL is automatically provisioned:
+
+1. In your Railway project, click "New Service"
+2. Select "Database" → "PostgreSQL"
+3. Railway automatically provides:
+   - `DATABASE_URL` environment variable
+   - Automatic backups
+   - Connection pooling
+   - SSL encryption
+
+**Connection Details:**
+- Railway provides the connection string automatically
+- Access via `${{Postgres.DATABASE_URL}}` in environment variables
+- No manual configuration needed
+
+### Alternative PostgreSQL Options
+
+If not using Railway:
+
+**Supabase:**
 1. Create a free account at https://supabase.com
 2. Create a new project
 3. Get connection string from Settings > Database
 4. Run data ingestion script to populate database
 
-**Using Neon:**
+**Neon:**
 1. Create account at https://neon.tech
 2. Create a new project
 3. Get connection string
 4. Populate with restaurant data
 
-### Redis Setup
+### Railway Redis (Recommended)
 
-**Using Upstash:**
+When using Railway, Redis is automatically provisioned:
+
+1. In your Railway project, click "New Service"
+2. Select "Database" → "Redis"
+3. Railway automatically provides:
+   - `REDIS_URL` environment variable
+   - `REDIS_HOST` and `REDIS_PORT` variables
+   - Automatic persistence
+   - Connection pooling
+
+**Connection Details:**
+- Railway provides Redis connection details automatically
+- Access via `${{Redis.REDIS_URL}}` in environment variables
+- No manual configuration needed
+
+### Alternative Redis Options
+
+If not using Railway:
+
+**Upstash:**
 1. Create account at https://upstash.com
 2. Create a new Redis database
 3. Get REST URL and token
@@ -302,12 +604,29 @@ REACT_APP_API_URL=https://your-backend-url.com
 
 ## Data Ingestion
 
-Before deployment, ensure the database is populated with restaurant data:
+### Running Data Ingestion on Railway
+
+After deploying your backend to Railway, populate the database with restaurant data:
+
+1. Go to your Railway backend service
+2. Click "Console" to open a web-based terminal
+3. Run the ingestion script:
+```bash
+python scripts/ingest_data.py --no-cache
+```
+
+**Note:** Use `--no-cache` flag to skip Redis caching if Redis is not yet configured.
+
+### Running Data Ingestion Locally
+
+Alternatively, run ingestion locally before deployment:
 
 ```bash
 cd backend
-python scripts/ingest_data.py
+python scripts/ingest_data.py --no-cache
 ```
+
+Then deploy to Railway with the pre-populated database.
 
 ## Monitoring and Logging
 
@@ -323,10 +642,11 @@ python scripts/ingest_data.py
 
 ## CI/CD Pipeline
 
-### GitHub Actions Example
+### GitHub Actions for Railway + Vercel
+
+Create `.github/workflows/deploy.yml`:
 
 ```yaml
-# .github/workflows/deploy.yml
 name: Deploy
 
 on:
@@ -338,31 +658,122 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Deploy to Render
+      - name: Deploy to Railway
         run: |
-          # Add Render deployment webhook
-          curl -X POST $RENDER_WEBHOOK
+          npm i -g @railway/cli
+          railway login --token ${{ secrets.RAILWAY_TOKEN }}
+          cd backend
+          railway up
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
   deploy-frontend:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Deploy to Vercel
-        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npm i -g vercel
+          cd frontend
+          vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 ```
+
+### Required GitHub Secrets
+
+Add these secrets to your GitHub repository:
+
+- `RAILWAY_TOKEN`: Get from Railway account settings
+- `VERCEL_TOKEN`: Get from Vercel account settings
+
+### Automatic Deployments
+
+**Railway:**
+- Automatic deployments on push to main branch
+- Can be configured in Railway dashboard
+- Supports preview deployments for pull requests
+
+**Vercel:**
+- Automatic deployments on push to main branch
+- Preview deployments for every branch/PR
+- Can be configured in Vercel dashboard
 
 ## Cost Estimation
 
-### Free Tier Options
-- **Frontend**: Vercel/Netlify (Free)
-- **Backend**: Render (Free tier available)
-- **Database**: Supabase/Neon (Free tier available)
-- **Redis**: Upstash (Free tier available)
+### Railway + Vercel Free Tier
 
-### Paid Options (if needed)
-- **Backend**: $7-25/month depending on usage
-- **Database**: $15-50/month depending on size
-- **Redis**: $5-20/month depending on usage
+**Railway Free Tier:**
+- $5 free credit per month
+- Includes:
+  - 512MB RAM
+  - Shared CPU
+  - 1GB PostgreSQL storage
+  - 1GB Redis storage
+  - Sufficient for small to medium applications
+
+**Vercel Free Tier:**
+- Completely free for personal projects
+- Includes:
+  - Unlimited deployments
+  - 100GB bandwidth per month
+  - Automatic HTTPS
+  - Global CDN
+  - Preview deployments
+
+**Total Cost: $0/month** (within free tier limits)
+
+### Railway Paid Plans (if needed)
+
+**Starter Plan ($5/month):**
+- 1GB RAM
+- Dedicated CPU
+- 10GB PostgreSQL storage
+- 10GB Redis storage
+
+**Production Plan ($20/month):**
+- 2GB RAM
+- Dedicated CPU
+- 50GB PostgreSQL storage
+- 50GB Redis storage
+- Priority support
+
+### Vercel Paid Plans (if needed)
+
+**Pro Plan ($20/month):**
+- Unlimited bandwidth
+- 1TB edge cache
+- Team collaboration
+- Advanced analytics
+
+**Enterprise Plan (Custom):**
+- Custom SLA
+- Dedicated support
+- SSO
+- Advanced security
+
+### Estimated Total Costs
+
+**Development/Small Scale:**
+- Frontend: $0 (Vercel Free)
+- Backend: $0 (Railway Free)
+- Database: $0 (Railway Free)
+- Redis: $0 (Railway Free)
+- **Total: $0/month**
+
+**Production/Medium Scale:**
+- Frontend: $0 (Vercel Free)
+- Backend: $5-20 (Railway)
+- Database: Included in Railway
+- Redis: Included in Railway
+- **Total: $5-20/month**
+
+**Large Scale:**
+- Frontend: $20 (Vercel Pro)
+- Backend: $20+ (Railway Production)
+- Database: Included in Railway
+- Redis: Included in Railway
+- **Total: $40+/month**
 
 ## Security Considerations
 
@@ -402,9 +813,55 @@ For deployment issues:
 
 ## Next Steps
 
-1. Choose deployment option based on your needs
-2. Set up required services (database, Redis)
-3. Configure environment variables
-4. Test deployment locally
-5. Deploy to chosen platform
-6. Monitor and optimize performance
+### Quick Start with Railway + Vercel
+
+1. **Prepare Backend**
+   - Create `railway.json` in backend directory
+   - Ensure `requirements.txt` is complete
+   - Push code to GitHub
+
+2. **Deploy Backend to Railway**
+   - Create Railway account at https://railway.app
+   - Connect GitHub repository
+   - Add PostgreSQL and Redis services
+   - Configure environment variables
+   - Deploy backend service
+
+3. **Run Data Ingestion**
+   - Open Railway console
+   - Run `python scripts/ingest_data.py --no-cache`
+   - Verify database is populated
+
+4. **Prepare Frontend**
+   - Create `vercel.json` in frontend directory
+   - Update `.env.production` with Railway backend URL
+   - Push code to GitHub
+
+5. **Deploy Frontend to Vercel**
+   - Create Vercel account at https://vercel.com
+   - Connect GitHub repository
+   - Configure environment variables
+   - Deploy frontend service
+
+6. **Update CORS**
+   - Go back to Railway backend
+   - Update `CORS_ORIGINS` with Vercel domain
+   - Redeploy backend
+
+7. **Test Deployment**
+   - Visit your Vercel frontend URL
+   - Test search functionality
+   - Verify API calls work correctly
+
+8. **Monitor and Optimize**
+   - Set up Railway monitoring
+   - Enable Vercel Analytics
+   - Monitor performance metrics
+   - Optimize as needed
+
+### Additional Setup (Optional)
+
+- **CI/CD**: Set up GitHub Actions for automatic deployments
+- **Monitoring**: Configure Sentry for error tracking
+- **Analytics**: Enable detailed analytics on both platforms
+- **Custom Domain**: Add custom domains for production

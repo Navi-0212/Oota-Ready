@@ -61,13 +61,16 @@ class DataService:
             DatasetEmptyError: If dataset is empty
         """
         try:
-            # Check cache first
+            # Check cache first (only if Redis is available)
             if use_cache and self.redis_client:
-                cached_data = self.redis_client.get(self.dataset_cache_key)
-                if cached_data:
-                    logger.info("Loading dataset from cache")
-                    self.dataset_cache = pd.read_json(cached_data)
-                    return self.dataset_cache
+                try:
+                    cached_data = self.redis_client.get(self.dataset_cache_key)
+                    if cached_data:
+                        logger.info("Loading dataset from cache")
+                        self.dataset_cache = pd.read_json(cached_data)
+                        return self.dataset_cache
+                except Exception as e:
+                    logger.warning(f"Failed to read from cache: {e}")
             
             # Load from Hugging Face
             logger.info("Loading dataset from Hugging Face...")
@@ -85,7 +88,7 @@ class DataService:
             
             logger.info(f"Loaded {len(df)} restaurants from dataset")
             
-            # Cache the dataset
+            # Cache the dataset (only if Redis is available)
             if self.redis_client:
                 try:
                     self.redis_client.setex(
