@@ -6,7 +6,6 @@
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
-    "ajv-keywords": "^3.5.2",
     "axios": "^1.6.2",
     "lucide-react": "^0.294.0",
     "react": "^18.2.0",
@@ -58,9 +57,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "overrides": {
-    "@apideck/better-ajv-errors": "0.3.6",
-    "ajv": "^6.12.6"
   }
 }
