@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GourmetAI - Discover the Best Italian in Mumbai</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fbf9f8",
+                    "inverse-surface": "#303030",
+                    "on-primary-fixed": "#390c00",
+                    "secondary": "#b7102a",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#594139",
+                    "secondary-container": "#db313f",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#dcd9d9",
+                    "tertiary-fixed-dim": "#59d5fb",
+                    "surface-container-highest": "#e4e2e1",
+                    "on-secondary-container": "#fffbff",
+                    "on-surface": "#1b1c1c",
+                    "on-primary-fixed-variant": "#832600",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#5f1900",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1c1c",
+                    "tertiary": "#00677e",
+                    "primary-fixed": "#ffdbd0",
+                    "outline": "#8d7168",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#ffb59d",
+                    "surface": "#fbf9f8",
+                    "surface-container-low": "#f6f3f2",
+                    "outline-variant": "#e1bfb5",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#ffdad8",
+                    "on-tertiary-fixed": "#001f28",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "secondary-fixed-dim": "#ffb3b1",
+                    "surface-variant": "#e4e2e1",
+                    "inverse-primary": "#ffb59d",
+                    "surface-bright": "#fbf9f8",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#410007",
+                    "on-secondary-fixed-variant": "#92001c",
+                    "primary": "#ab3500",
+                    "surface-tint": "#ab3500",
+                    "inverse-on-surface": "#f3f0f0",
+                    "on-tertiary-container": "#003744",
+                    "tertiary-fixed": "#b5ebff",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#eae8e7",
+                    "surface-container": "#f0eded",
+                    "primary-container": "#ff6b35",
+                    "tertiary-container": "#00a7cb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "gutter": "16px",
+                    "sm": "12px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "lg": "40px",
+                    "margin-desktop": "120px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .ai-smart-glow {
+            box-shadow: 0px 0px 40px 10px rgba(255, 107, 53, 0.08);
+        }
+        .restaurant-card-shadow {
+            box-shadow: 0px 4px 20px rgba(51, 51, 51, 0.08);
+            transition: all 0.3s ease;
+        }
+        .restaurant-card-shadow:hover {
+            box-shadow: 0px 8px 30px rgba(51, 51, 51, 0.12);
+            border-bottom: 2px solid #ff6b35;
+        }
+        .ai-badge-gradient {
+            background: linear-gradient(135deg, #ff6b35 0%, #b7102a 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface font-body-md">
+<!-- Top Navigation Bar -->
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md w-full sticky top-0 z-50 bg-background dark:bg-background shadow-sm">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">
+            GourmetAI
+        </div>
+<div class="hidden md:flex items-center gap-lg font-body-md text-body-md">
+<a class="text-primary dark:text-primary-fixed font-bold border-b-2 border-primary hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">About</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Contact</a>
+</div>
+<button class="bg-primary-container text-on-primary-fixed font-label-md px-md py-sm rounded-lg hover:opacity-90 active:scale-95 transition-all">
+            Get Started
+        </button>
+</nav>
+<!-- Main Content -->
+<main class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop py-lg">
+<!-- Search Criteria Summary -->
+<section class="mb-lg">
+<div class="flex flex-wrap items-center gap-base text-on-surface-variant">
+<span class="material-symbols-outlined text-primary">search</span>
+<h1 class="font-headline-md text-headline-md md:text-headline-lg">Italian in Mumbai</h1>
+<span class="px-base py-xs bg-surface-container rounded-full text-label-sm">• ₹₹ • 4+ Stars</span>
+</div>
+</section>
+<!-- AI Summary Box -->
+<section class="mb-lg bg-surface-container-lowest rounded-xl p-md md:p-lg border border-outline-variant ai-smart-glow relative overflow-hidden">
+<div class="absolute top-0 right-0 p-gutter">
+<div class="ai-badge-gradient text-white text-[10px] uppercase font-bold tracking-wider px-sm py-xs rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[14px]" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                    AI Analysis
+                </div>
+</div>
+<div class="max-w-3xl">
+<h2 class="font-headline-md text-headline-md text-primary mb-sm">Why these are your perfect matches</h2>
+<p class="text-on-surface-variant font-body-md leading-relaxed">
+                    Based on your preference for <span class="font-bold text-on-surface">authentic Neapolitan flavors</span> and <span class="font-bold text-on-surface">al fresco dining</span>, we've curated a list of top-tier Italian spots in Mumbai. These restaurants excel in artisanal dough preparation and have consistently high ratings for their evening ambiance. We've prioritized locations currently trending for their seasonal black truffle menus.
+                </p>
+</div>
+</section>
+<!-- Search Results Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Card 1 (Top Recommendation) -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group ai-smart-glow">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautifully plated authentic Neapolitan pizza with fresh basil and buffalo mozzarella sitting on a rustic wooden table. The lighting is warm and golden, suggesting a late afternoon in a high-end Italian bistro. The background is softly blurred, showing a modern, minimalist restaurant interior with soft orange accents. The overall mood is luxurious and appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBKL3mCBbJvxZXXWA1Rsr-5oOnthdbzCYy71S0VkKpyo7S3O3OSfXc2eb0ZobsSw8fRoTkNVA1fnACS0ZiCAvPw6Ts5JpWjYHnu13nIyDvoNuRamdrd03gOWjj9IFvwUkS6bLXbHxPL5gFW82e55kl6PLaCPpnhFi8pbNFj65XRy30Kyw842eJaULtDvbtmC0nw1rw_Juyn-OuIFljkbImRyC0rpGwzJoYBtBGCTDH-m8mUAIN6KKvxo5AaXkWwAYYTBrdKmRXKQoW"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.8
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        98% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Trattoria Gusto</h3>
+<span class="text-label-md text-on-surface-variant">₹1,800 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Authentic Italian • Colaba</p>
+<div class="bg-primary-fixed/30 p-sm rounded-lg mb-md">
+<p class="text-on-primary-fixed-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Famous for its wood-fired oven and romantic garden seating with sea views.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up shot of a gourmet seafood linguine pasta dish served in a wide white ceramic bowl. The scene is illuminated by crisp, bright natural light in a contemporary dining setting. Soft shadows create depth, emphasizing the texture of the pasta and fresh ingredients. The color palette is clean with pops of orange and green, maintaining a sophisticated and modern culinary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIcmX-qe1mZ4ksXm1ZWYyJ4Fykp52oPspKDOnJXUWKisDbTHqZx9Su4XW1AP9yWUSOLXM3lJ1ttFNc3tLawcKMNOYa408FLAky5wH8CzllulH6-sR1N8IjqRGiWYIKbht8TMLHrlQQ7uJB_58MrOpqBX_c53accWiwH2ST3aUmCRgd0KdGDpwZl-TSukGGDV3oFRSGWAiHUC3n9V8zZ3I6siznldg7n9x9msc0-KEWGXmjuA6bUw3Lz4fB7z2WJYcsuRk9Iv9LhJkc"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.5
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        92% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Pasta &amp; Co.</h3>
+<span class="text-label-md text-on-surface-variant">₹1,200 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Modern Italian • BKC</p>
+<div class="bg-surface-container p-sm rounded-lg mb-md">
+<p class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Best known for handmade pasta and its quick, professional lunch service.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sophisticated dark-themed cocktail bar setting where a classic Negroni is presented on a marble counter. The lighting is moody and focused, with warm amber glows reflecting off glassware. The aesthetic is upscale and corporate-chic, featuring deep wood textures and metallic accents. The overall atmosphere is intimate, professional, and reflects high-end nocturnal discovery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx9Gn3bPGNNOLnx4Yh6J1BMyIzU0-cKQQF6sudUKftLwFikB7U3gxh5B5KV7P6S8KK_j6rlML7auVMAUDXpStI6-2QrLR0vyDUgMV03RzCXDb1JICRmVtVmGlXLq9TO6g65IXFYFjAyVFN-YGF1XtGIumghk9OABRHgjnqcNKpMftQZY_-URWNkmEUyA7qnVVt1MHapKOLi744nfCqmZK53Zgg5r2i2Wxi9IDdprGuql1GTY8PZJ9YKj8Cn32DsPMkT91Emu5r9vBm"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.2
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        85% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Milano Nights</h3>
+<span class="text-label-md text-on-surface-variant">₹2,500 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Fine Dining • Worli</p>
+<div class="bg-surface-container p-sm rounded-lg mb-md">
+<p class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Exceptional wine pairings and a live jazz atmosphere every Friday night.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An assortment of fresh Italian antipasti served on a slate platter, including cured meats, olives, and aged cheeses. The setting is a bright, airy patio with white linen tablecloths and dappled sunlight coming through olive trees. The visual style is high-key and fresh, with a palette of vibrant natural colors. The mood is relaxed, summery, and premium." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCELPBu5XOQc227ukJtcIomTRF5XW3UYcyFN4G0eqCI1yq2KDHl3ZR5xHmjoxo2Q0pgAlCFmPpJ4fzfzKSIAYd_i5W0HK1BEj8c93njdNK_bnC2-gtUoFAIgg8vYgU8LScofRdU1VU2CcyQaW8KYMsQVJCLsDoGQug7RDzaATKH4E0oYUHV7B33YRfh5nSYSVuCKLrc_J38Z1Xm0jRo6AT0bTKUycjbItSlB2m_sjgIo-Wflk7d5mFeHKt-YAcND7lS2A3SD3VCrlxn"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.4
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        89% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">L'Osteria</h3>
+<span class="text-label-md text-on-surface-variant">₹1,500 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Rustic Italian • Juhu</p>
+<div class="bg-surface-container p-sm rounded-lg mb-md">
+<p class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Ideal for family gatherings with large sharing platters and friendly staff.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A modern minimalist kitchen countertop where fresh ravioli is being dusted with parmesan cheese. The lighting is clean and industrial-modern, with cool tones and sharp focus. The scene suggests a professional culinary environment that values precision and high-quality ingredients. The color palette is composed of neutrals with deep orange accents from the sauce." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeWBPVyW_vckIXaePovJWp7-WK-IIbmcvqSXU9dDH-uc7aw99gFtOfSCauLYM-aM-ydVLgkMji04oKb0ncLdwioYqbAjNbh6akVDm9daGSgHmed-uExfoHXqKJ799FEQT2nsRfTbKiS8-k7HGMo3_KZLEaKjHFW47uDoJu0fGlUKEOnITjpH80F1wWVA4G1QKIN_OuugXk396CFMk1CurEXqon2f2DTXJS9JkFvGJ-gwY2gyvcFU7WtU3ukI7UwLzLVaP46x4Fqt_n"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.6
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        94% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Ravioli Lab</h3>
+<span class="text-label-md text-on-surface-variant">₹1,100 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Fusion Italian • Bandra</p>
+<div class="bg-surface-container p-sm rounded-lg mb-md">
+<p class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Experimental fillings and a contemporary aesthetic perfect for digital nomads.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden restaurant-card-shadow flex flex-col group">
+<div class="relative h-[240px] w-full">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A classic Tiramisu dessert served on a sleek glass plate, garnished with a dusting of cocoa and a mint leaf. The setting is an elegant evening dining room with candlelight reflections on polished surfaces. The visual style is premium and decadent, with warm highlights and deep shadows. The atmosphere is quiet, refined, and celebratory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuTYcoPxi3DYJqsJE8shAbGFG0c17YGH9VH3coQtYPSPyn2Orr7JIiUlSzkJp23-DXIQJdUvfcuVVJk2dXVYpW0MdicCzeA61Fb5oLD1MNOLXKNuQqGCjUD2_uC34bIKU_capL9fO2pM9-A3qb5Dn9D1SfbMgLbB-0uGJGMbAIoLDDPV6IoiW49u0dk6_j852Iiq8JfDQjmORU8nuIbpFfYx-qXE-zBwoW5__ZHHizmbJXCpI_GvPCVwrT9fanmrrzjIECeRLWpvdB"/>
+<div class="absolute top-base right-base bg-tertiary text-white px-sm py-xs rounded-lg font-label-md flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        4.9
+                    </div>
+<div class="absolute bottom-base left-base bg-white/90 backdrop-blur-sm px-sm py-xs rounded-full font-label-md text-primary flex items-center gap-xs">
+<span class="material-symbols-outlined !text-[16px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                        96% Match
+                    </div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-on-surface">Dolce Vita</h3>
+<span class="text-label-md text-on-surface-variant">₹2,200 for two</span>
+</div>
+<p class="text-primary font-label-md mb-md">Dessert &amp; Coffee • Malabar Hill</p>
+<div class="bg-surface-container p-sm rounded-lg mb-md">
+<p class="text-on-surface-variant text-label-sm font-bold flex items-center gap-xs mb-xs">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+                            Why you'll love it
+                        </p>
+<p class="text-on-surface-variant text-label-md">Unbeatable desserts and panoramic views of the city skyline.</p>
+</div>
+<button class="mt-auto w-full py-sm rounded-lg border border-primary text-primary font-label-md hover:bg-primary hover:text-white transition-all active:scale-95">
+                        View Details
+                    </button>
+</div>
+</div>
+</section>
+<!-- Pagination/Load More -->
+<div class="mt-xl flex justify-center">
+<button class="bg-white text-on-surface border border-outline-variant px-lg py-md rounded-full font-label-md hover:border-primary hover:text-primary transition-colors flex items-center gap-sm">
+                Load more recommendations
+                <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-lg flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container dark:bg-surface-container">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<div class="font-headline-md text-headline-md font-bold text-primary">GourmetAI</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">© 2024 GourmetAI. Precision Discovery for Foodies.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-md font-label-sm text-label-sm">
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Cookie Policy</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all" href="#">Support</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Subtle hover glow for the top recommendation
+        const topCard = document.querySelector('.ai-smart-glow');
+        if (topCard) {
+            topCard.addEventListener('mouseenter', () => {
+                topCard.style.boxShadow = "0px 0px 50px 15px rgba(255, 107, 53, 0.12)";
+            });
+            topCard.addEventListener('mouseleave', () => {
+                topCard.style.boxShadow = "0px 0px 40px 10px rgba(255, 107, 53, 0.08)";
+            });
+        }
+    </script>
+</body></html>

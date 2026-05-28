@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GourmetAI - Precision Discovery for Foodies</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "background": "#fbf9f8",
+                    "inverse-surface": "#303030",
+                    "on-primary-fixed": "#390c00",
+                    "secondary": "#b7102a",
+                    "error-container": "#ffdad6",
+                    "on-surface-variant": "#594139",
+                    "secondary-container": "#db313f",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#dcd9d9",
+                    "tertiary-fixed-dim": "#59d5fb",
+                    "surface-container-highest": "#e4e2e1",
+                    "on-secondary-container": "#fffbff",
+                    "on-surface": "#1b1c1c",
+                    "on-primary-fixed-variant": "#832600",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#5f1900",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1b1c1c",
+                    "tertiary": "#00677e",
+                    "primary-fixed": "#ffdbd0",
+                    "outline": "#8d7168",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#ffb59d",
+                    "surface": "#fbf9f8",
+                    "surface-container-low": "#f6f3f2",
+                    "outline-variant": "#e1bfb5",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#ffdad8",
+                    "on-tertiary-fixed": "#001f28",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "secondary-fixed-dim": "#ffb3b1",
+                    "surface-variant": "#e4e2e1",
+                    "inverse-primary": "#ffb59d",
+                    "surface-bright": "#fbf9f8",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#410007",
+                    "on-secondary-fixed-variant": "#92001c",
+                    "primary": "#ab3500",
+                    "surface-tint": "#ab3500",
+                    "inverse-on-surface": "#f3f0f0",
+                    "on-tertiary-container": "#003744",
+                    "tertiary-fixed": "#b5ebff",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#eae8e7",
+                    "surface-container": "#f0eded",
+                    "primary-container": "#ff6b35",
+                    "tertiary-container": "#00a7cb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "md": "24px",
+                    "xl": "64px",
+                    "gutter": "16px",
+                    "sm": "12px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "lg": "40px",
+                    "margin-desktop": "120px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .smart-glow {
+            box-shadow: 0 0 60px 10px rgba(255, 107, 53, 0.08);
+        }
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.2), rgba(251, 249, 248, 1));
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-fixed">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center px-margin-desktop py-md w-full sticky top-0 z-50 bg-background dark:bg-background shadow-sm">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">GourmetAI</div>
+<nav class="hidden md:flex items-center gap-lg">
+<a class="font-body-md text-body-md text-primary dark:text-primary-fixed font-bold border-b-2 border-primary transition-colors" href="#">Home</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">About</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Contact</a>
+</nav>
+<button class="bg-primary-container text-on-primary-container px-md py-xs rounded-lg font-label-md hover:opacity-90 active:scale-95 transition-all">
+            Get Started
+        </button>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[921px] flex flex-col items-center justify-start pt-xl overflow-hidden">
+<!-- Background Image -->
+<div class="absolute inset-0 -z-10">
+<img class="w-full h-full object-cover" data-alt="A top-down view of a modern, elegantly set dining table with minimalist ceramic plates, brushed gold cutlery, and artisanal sourdough bread. The setting is bathed in soft, natural morning light, creating a bright and clean light-mode aesthetic. Subtle primary orange accents appear in the napkins. The overall mood is high-end, professional, and appetizing, reflecting a premium culinary concierge service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT_JjbEnMgR5iEA_s_M2ry7YubZmHx8DG4fJ3yJO1KaJ4S7njXfxd0YLyjTimITT_K4i9UkoAlB9c3ISYIdZPnQ-SX6Cjw4gsnSAvH88DlcCHQD7dQ7tYF2-Nc0DvEj1r0ICIceebanageq7R1WSLRO4H0L-fiFWlMDqCbR6ZWKRhMQmS7pqHj8P9vMIadMyqayrhi3z79ws5-cZVdmJQzp2bg5QyQYm9-sKRV8YM1ISffb2IyjQWVQE-lptdBEuHrGGvUR7ldbHUi"/>
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+<!-- Hero Content -->
+<div class="text-center px-margin-mobile md:px-0 max-w-3xl mb-lg">
+<h1 class="font-headline-xl text-headline-xl text-white drop-shadow-md mb-base md:block hidden">
+                    AI-Powered Restaurant Recommendations
+                </h1>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-white drop-shadow-md mb-base md:hidden">
+                    AI-Powered Restaurant Recommendations
+                </h1>
+<p class="font-body-lg text-body-lg text-white/90 drop-shadow-sm">
+                    Find the perfect restaurant based on your preferences using AI. Precision discovery for modern foodies.
+                </p>
+</div>
+<!-- Primary Interaction: Card-based Preference Form -->
+<div class="w-full max-w-4xl px-margin-mobile md:px-0 relative z-10">
+<div class="bg-surface-container-lowest rounded-xl p-md md:p-lg shadow-xl smart-glow border border-surface-variant">
+<form class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Location -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                                Location
+                            </label>
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline group-focus-within:text-primary transition-colors">search</span>
+<select class="w-full pl-xl pr-md py-sm bg-surface-container-low border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+<option disabled="" selected="" value="">Select a city</option>
+<option>Mumbai, India</option>
+<option>Bangalore, India</option>
+<option>New Delhi, India</option>
+<option>San Francisco, USA</option>
+<option>London, UK</option>
+</select>
+<span class="material-symbols-outlined absolute right-sm top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Budget -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+                                Budget
+                            </label>
+<div class="flex bg-surface-container-low p-xs rounded-xl gap-xs border border-outline-variant">
+<button class="flex-1 py-base rounded-lg font-label-md transition-all bg-primary-container text-on-primary-container shadow-sm" type="button">₹</button>
+<button class="flex-1 py-base rounded-lg font-label-md transition-all text-on-surface-variant hover:bg-surface-variant" type="button">₹₹</button>
+<button class="flex-1 py-base rounded-lg font-label-md transition-all text-on-surface-variant hover:bg-surface-variant" type="button">₹₹₹</button>
+</div>
+</div>
+<!-- Cuisine -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                Cuisine
+                            </label>
+<div class="relative">
+<select class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary focus:border-primary min-h-[100px]" multiple="">
+<option value="italian">🇮🇹 Italian</option>
+<option value="japanese">🇯🇵 Japanese</option>
+<option value="indian">🇮🇳 Indian</option>
+<option value="mexican">🇲🇽 Mexican</option>
+<option value="french">🇫🇷 French</option>
+</select>
+<p class="text-[10px] text-outline mt-1 italic leading-tight">Hold Ctrl (Cmd) to select multiple</p>
+</div>
+</div>
+<!-- Rating -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">grade</span>
+                                Minimum Rating
+                            </label>
+<div class="bg-surface-container-low p-md rounded-lg border border-outline-variant flex flex-col gap-base">
+<div class="flex justify-between text-label-sm text-outline">
+<span>0</span>
+<span>2.5</span>
+<span>5.0</span>
+</div>
+<input class="w-full h-2 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary" max="5" min="0" step="0.5" type="range" value="4"/>
+<div class="flex items-center gap-xs text-primary font-bold justify-center">
+<span id="rating-val">4.0</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<!-- Special Requests -->
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-md text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+                                Special Requests
+                            </label>
+<textarea class="w-full px-md py-sm bg-surface-container-low border border-outline-variant rounded-lg font-body-md focus:ring-2 focus:ring-primary focus:border-primary h-24 resize-none" placeholder="Tell us more: Family-friendly, romantic ambiance, rooftop seating, vegan options..."></textarea>
+</div>
+<!-- CTA -->
+<div class="md:col-span-2 pt-base">
+<button class="w-full bg-primary-container text-on-primary-container py-md rounded-xl font-headline-md shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-all flex items-center justify-center gap-sm" type="submit">
+<span class="material-symbols-outlined">auto_awesome</span>
+                                Get Recommendations
+                            </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<!-- Features Grid (Optional Section for Professionalism) -->
+<section class="py-xl px-margin-desktop bg-background">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<div class="flex flex-col gap-base p-md border border-surface-variant rounded-xl hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">psychology</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Smart Analysis</h3>
+<p class="font-body-md text-on-surface-variant">Our AI understands nuances like 'vibe' and 'mood' to match your occasion perfectly.</p>
+</div>
+<div class="flex flex-col gap-base p-md border border-surface-variant rounded-xl hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[32px]">verified</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Curated Lists</h3>
+<p class="font-body-md text-on-surface-variant">Access exclusive recommendations vetted by our gourmet algorithm and local experts.</p>
+</div>
+<div class="flex flex-col gap-base p-md border border-surface-variant rounded-xl hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[32px]">schedule</span>
+</div>
+<h3 class="font-headline-md text-headline-md">Real-Time Fit</h3>
+<p class="font-body-md text-on-surface-variant">Get live availability and peak-hour predictions integrated directly into your results.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-margin-desktop py-lg flex flex-col md:flex-row justify-between items-center gap-md bg-surface-container dark:bg-surface-container">
+<div class="flex flex-col items-center md:items-start gap-xs">
+<span class="font-headline-md text-headline-md font-bold text-primary">GourmetAI</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 GourmetAI. Precision Discovery for Foodies.</span>
+</div>
+<div class="flex gap-md">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all focus:ring-2 ring-primary p-xs rounded" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all focus:ring-2 ring-primary p-xs rounded" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all focus:ring-2 ring-primary p-xs rounded" href="#">Cookie Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-all focus:ring-2 ring-primary p-xs rounded" href="#">Support</a>
+</div>
+</footer>
+<script>
+        // Simple Interaction for Rating Slider
+        const slider = document.querySelector('input[type="range"]');
+        const display = document.getElementById('rating-val');
+        
+        slider?.addEventListener('input', (e) => {
+            display.textContent = parseFloat(e.target.value).toFixed(1);
+        });
+
+        // Form submission micro-interaction
+        document.querySelector('form')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Analyzing Preferences...';
+            btn.classList.add('opacity-80');
+            
+            setTimeout(() => {
+                btn.innerHTML = '<span class="material-symbols-outlined">check_circle</span> Recommendations Ready!';
+                btn.classList.remove('bg-primary-container');
+                btn.classList.add('bg-secondary');
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('bg-secondary', 'opacity-80');
+                    btn.classList.add('bg-primary-container');
+                }, 2000);
+            }, 1500);
+        });
+
+        // Budget selection toggle logic
+        const budgetBtns = document.querySelectorAll('button[type="button"]');
+        budgetBtns.forEach(btn => {
+            if(btn.closest('.flex')) {
+                 btn.addEventListener('click', () => {
+                    budgetBtns.forEach(b => {
+                        b.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+                        b.classList.add('text-on-surface-variant');
+                    });
+                    btn.classList.remove('text-on-surface-variant');
+                    btn.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-sm');
+                });
+            }
+        });
+    </script>
+</body></html>
