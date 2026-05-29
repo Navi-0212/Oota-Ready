@@ -86,6 +86,18 @@ export const recommendationApi = {
       throw error;
     }
   },
+
+  getRestaurantMenu: async (restaurantId: number): Promise<{ success: boolean; data: any[]; message?: string }> => {
+    try {
+      const response = await api.get<{ success: boolean; data: any[]; message?: string }>(
+        `/api/restaurant/${restaurantId}/menu`
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error getting restaurant menu:', error);
+      throw error;
+    }
+  },
 };
 
 export default api;

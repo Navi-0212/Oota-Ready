@@ -13,7 +13,7 @@ import json
 from datetime import datetime
 
 from ..db.connection import get_database
-from ..db.models import Restaurant
+from ..db.models import Restaurant, MenuItem
 
 logger = logging.getLogger(__name__)
 
@@ -465,6 +465,28 @@ class DataService:
                 return [restaurant.to_dict() for restaurant in restaurants]
         except Exception as e:
             logger.error(f"Failed to search restaurants in database: {e}")
+            return []
+    
+    def get_menu_items_by_restaurant_db(self, restaurant_id: int) -> List[Dict[str, Any]]:
+        """
+        Get menu items for a specific restaurant from database
+        
+        Args:
+            restaurant_id: Restaurant ID
+            
+        Returns:
+            List of menu item dictionaries
+        """
+        try:
+            db = get_database()
+            with db.get_session() as session:
+                menu_items = session.query(MenuItem).filter(
+                    MenuItem.restaurant_id == restaurant_id,
+                    MenuItem.is_available == 1
+                ).all()
+                return [item.to_dict() for item in menu_items]
+        except Exception as e:
+            logger.error(f"Failed to get menu items from database: {e}")
             return []
 
 

@@ -258,3 +258,39 @@ async def get_restaurant_by_id(restaurant_id: int):
     except Exception as e:
         logger.error(f"Error getting restaurant: {e}")
         raise HTTPException(status_code=500, detail="Failed to get restaurant")
+
+
+@router.get("/restaurant/{restaurant_id}/menu")
+async def get_restaurant_menu(restaurant_id: int):
+    """
+    Get menu items for a specific restaurant
+    
+    Args:
+        restaurant_id: Restaurant ID
+        
+    Returns:
+        List of menu items with prices
+    """
+    try:
+        logger.info(f"Fetching menu for restaurant ID: {restaurant_id}")
+        
+        menu_items = data_service.get_menu_items_by_restaurant_db(restaurant_id)
+        
+        if not menu_items:
+            logger.warning(f"No menu items found for restaurant ID {restaurant_id}")
+            return {
+                "success": True,
+                "data": [],
+                "message": "No menu items available"
+            }
+        
+        logger.info(f"Returning {len(menu_items)} menu items")
+        
+        return {
+            "success": True,
+            "data": menu_items
+        }
+        
+    except Exception as e:
+        logger.error(f"Error getting menu items: {e}")
+        raise HTTPException(status_code=500, detail="Failed to get menu items")
