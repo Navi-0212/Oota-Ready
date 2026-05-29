@@ -81,6 +81,7 @@ const HomePage: React.FC = () => {
           match_score: 0.89,
           llm_rank: 3,
           llm_explanation: `A legendary heritage spot in ${prefs.location || 'Basavanagudi'} known for its crispy dosas and rich filter coffee. It matches your rating preference perfectly.`,
+        }
       ];
     };
 
