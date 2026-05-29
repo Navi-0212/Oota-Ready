@@ -33,6 +33,29 @@ async def lifespan(app: FastAPI):
         from app.db.connection import init_database
         db = init_database()
         logger.info("Database initialized successfully")
+        
+        # Self-healing check: Seed database if completely empty
+        try:
+            with db.get_session() as session:
+                from app.db.models import Restaurant
+                count = session.query(Restaurant).count()
+                if count == 0:
+                    logger.info("Database is empty. Initiating automatic data seeding...")
+                    import sys
+                    import os
+                    backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    if backend_dir not in sys.path:
+                        sys.path.append(backend_dir)
+                    
+                    from scripts.ingest_bangalore_data import ingest_areas, ingest_cuisines, ingest_restaurants_and_menus
+                    ingest_areas(session)
+                    ingest_cuisines(session)
+                    ingest_restaurants_and_menus(session)
+                    logger.info("Automatic data seeding completed successfully!")
+                else:
+                    logger.info(f"Database contains {count} restaurants.")
+        except Exception as eseed:
+            logger.warning(f"Automatic database seeding check/run failed: {eseed}")
     except Exception as e:
         logger.warning(f"Database initialization failed: {e}")
     

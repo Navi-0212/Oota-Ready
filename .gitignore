@@ -42,6 +42,7 @@ venv.bak/
 
 # Database
 *.db
+!backend/zomato.db
 *.sqlite
 *.sqlite3
 
