@@ -60,7 +60,6 @@
   },
   "overrides": {
     "typescript": "^4.9.5",
-    "ajv": "^8.12.0",
     "@apideck/better-ajv-errors": "0.3.6",
     "eslint-config-react-app": {
       "@apideck/better-ajv-errors": "0.3.6"
@@ -68,6 +67,6 @@
     "workbox-build": {
       "@apideck/better-ajv-errors": "0.3.6"
     },
-    "ajv-keywords": "npm:ajv-keywords@5.1.0"
+    "fork-ts-checker-webpack-plugin": "9.0.0"
   }
 }
