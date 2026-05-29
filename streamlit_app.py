@@ -147,7 +147,13 @@ with st.container():
         location = st.selectbox("📍 Location", [""] + locations, key="location")
     
     with col2:
-        budget = st.selectbox("💰 Budget", ["Low", "Medium", "High"], key="budget")
+        budget_display = st.selectbox("💰 Budget", ["Under ₹500", "₹500 - ₹1,500", "Over ₹1,500"], key="budget_display")
+        budget_map = {
+            "Under ₹500": "low",
+            "₹500 - ₹1,500": "medium",
+            "Over ₹1,500": "high"
+        }
+        budget_val = budget_map[budget_display]
     
     with col3:
         cuisines = get_cuisines()
@@ -171,7 +177,7 @@ if search_clicked:
         with st.spinner("Finding the best restaurants for you..."):
             preferences = {
                 "location": location,
-                "budget": budget.lower(),
+                "budget": budget_val,
                 "cuisine": cuisine,
                 "min_rating": min_rating
             }

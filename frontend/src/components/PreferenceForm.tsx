@@ -1,7 +1,7 @@
 // Preference Form component
 
 import React, { useState, useEffect } from 'react';
-import { Search, DollarSign, Utensils, Star, MapPin, RefreshCw } from 'lucide-react';
+import { Search, IndianRupee, Utensils, Star, MapPin, RefreshCw } from 'lucide-react';
 import { RecommendationRequest } from '../types';
 import { useStore } from '../store';
 
@@ -83,16 +83,16 @@ const PreferenceForm: React.FC = () => {
 
           {/* Budget */}
           <div className="relative">
-            <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: '#8D7168' }} />
+            <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: '#8D7168' }} />
             <select
               value={localPreferences.budget}
               onChange={(e) => setLocalPreferences({ ...localPreferences, budget: e.target.value as 'low' | 'medium' | 'high' })}
               className="w-full pl-10 pr-4 py-3 rounded-xl appearance-none focus:outline-none focus:ring-2 transition-all"
               style={{ backgroundColor: '#F8F9FA', border: '1px solid #E0E0E0', fontFamily: 'Inter, sans-serif', color: '#1B1C1C' }}
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="low">Under ₹500</option>
+              <option value="medium">₹500 - ₹1,500</option>
+              <option value="high">Over ₹1,500</option>
             </select>
           </div>
 
