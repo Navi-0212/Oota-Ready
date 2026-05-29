@@ -36,14 +36,21 @@ class DatabaseConnection:
     
     def _initialize_engine(self):
         """Initialize database engine"""
+        db_url = self.database_url
         try:
-            self.engine = create_engine(
-                self.database_url,
-                pool_pre_ping=True,
-                pool_size=10,
-                max_overflow=20,
-                echo=os.getenv("DEBUG", "false").lower() == "true"
-            )
+            kwargs = {
+                "pool_pre_ping": True,
+                "echo": os.getenv("DEBUG", "false").lower() == "true"
+            }
+            if "sqlite" not in db_url:
+                kwargs["pool_size"] = 10
+                kwargs["max_overflow"] = 20
+                
+            self.engine = create_engine(db_url, **kwargs)
+            
+            # Test connection to ensure database is reachable
+            self.engine.connect().close()
+            
             self.SessionLocal = sessionmaker(
                 autocommit=False,
                 autoflush=False,
@@ -51,6 +58,28 @@ class DatabaseConnection:
             )
             logger.info("Database engine initialized successfully")
         except Exception as e:
+            # Check if we can gracefully fallback to SQLite
+            if "postgresql" in db_url:
+                backend_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                fallback_path = os.path.join(backend_dir, "zomato.db").replace("\\", "/")
+                fallback_url = f"sqlite:///{fallback_path}"
+                logger.warning(f"Failed to connect to PostgreSQL ({db_url}): {e}. Falling back to SQLite: {fallback_url}")
+                try:
+                    self.database_url = fallback_url
+                    self.engine = create_engine(
+                        fallback_url,
+                        echo=os.getenv("DEBUG", "false").lower() == "true"
+                    )
+                    self.SessionLocal = sessionmaker(
+                        autocommit=False,
+                        autoflush=False,
+                        bind=self.engine
+                    )
+                    logger.info("Database engine initialized successfully with SQLite fallback")
+                    return
+                except Exception as ex:
+                    logger.error(f"Failed to initialize SQLite fallback: {ex}")
+            
             logger.error(f"Failed to initialize database engine: {e}")
             raise DatabaseConnectionError(f"Failed to initialize database: {str(e)}")
     

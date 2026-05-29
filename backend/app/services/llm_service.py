@@ -75,13 +75,14 @@ Please respond in JSON format with the following structure:
         # Initialize Redis for caching
         self.redis_client = None
         try:
-            self.redis_client = redis.Redis(
+            client = redis.Redis(
                 host=os.getenv("REDIS_HOST", "localhost"),
                 port=int(os.getenv("REDIS_PORT", 6379)),
                 db=int(os.getenv("REDIS_DB", 0)),
                 decode_responses=True
             )
-            self.redis_client.ping()
+            client.ping()
+            self.redis_client = client
             logger.info("Connected to Redis cache for LLM responses")
         except Exception as e:
             logger.warning(f"Could not connect to Redis for caching: {e}")

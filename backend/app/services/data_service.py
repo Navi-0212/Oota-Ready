@@ -32,13 +32,14 @@ class DataService:
         """
         self.redis_client = None
         try:
-            self.redis_client = redis.Redis(
+            client = redis.Redis(
                 host=redis_host,
                 port=redis_port,
                 db=redis_db,
                 decode_responses=True
             )
-            self.redis_client.ping()
+            client.ping()
+            self.redis_client = client
             logger.info("Connected to Redis cache")
         except Exception as e:
             logger.warning(f"Could not connect to Redis: {e}")
