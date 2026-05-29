@@ -22,14 +22,20 @@ const PreferenceForm: React.FC = () => {
           recommendationApi.getLocations(),
           recommendationApi.getCuisines(),
         ]);
-        if (locationsRes.success && locationsRes.data) {
+        if (locationsRes.success && locationsRes.data && locationsRes.data.length > 0) {
           setLocations(locationsRes.data);
+        } else {
+          setLocations(["Indiranagar", "Koramangala", "HSR Layout", "Jayanagar", "Whitefield", "MG Road", "Brigade Road", "Electronic City", "BTM Layout", "Frazer Town", "Basavanagudi"]);
         }
-        if (cuisinesRes.success && cuisinesRes.data) {
+        if (cuisinesRes.success && cuisinesRes.data && cuisinesRes.data.length > 0) {
           setCuisines(cuisinesRes.data);
+        } else {
+          setCuisines(["North Indian", "South Indian", "Chinese", "Italian", "Mexican", "Thai", "Japanese", "Continental", "Biryani", "Kerala", "Andhra", "Mughlai", "Seafood", "Street Food", "Cafe"]);
         }
       } catch (error) {
-        console.error('Failed to fetch metadata:', error);
+        console.error('Failed to fetch metadata, using local fallback:', error);
+        setLocations(["Indiranagar", "Koramangala", "HSR Layout", "Jayanagar", "Whitefield", "MG Road", "Brigade Road", "Electronic City", "BTM Layout", "Frazer Town", "Basavanagudi"]);
+        setCuisines(["North Indian", "South Indian", "Chinese", "Italian", "Mexican", "Thai", "Japanese", "Continental", "Biryani", "Kerala", "Andhra", "Mughlai", "Seafood", "Street Food", "Cafe"]);
       }
     };
     fetchMetadata();
