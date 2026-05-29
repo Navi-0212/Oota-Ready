@@ -67,6 +67,7 @@
     },
     "workbox-build": {
       "@apideck/better-ajv-errors": "0.3.6"
-    }
+    },
+    "ajv-keywords": "npm:ajv-keywords@5.1.0"
   }
 }
